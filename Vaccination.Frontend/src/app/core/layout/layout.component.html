@@ -1,0 +1,59 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>
+      <a routerLink="/home">
+        <img src="../../../assets/gov-light.png" alt="Home" />
+      </a>
+    </mat-toolbar>
+    <mat-nav-list>
+      @for (item of sideNavRoutes; track $index) {
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          #link="routerLinkActive"
+          routerLinkActive
+          [activated]="link.isActive"
+        >
+          {{ item.title }}
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isHandset$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      @if (isLoggedIn()) {
+        <span>Carnet de vaccination électronique de {{ userFirstname }}</span>
+        <span class="spacer"></span>
+        <app-notification-menu></app-notification-menu>
+        <button mat-button (click)="logout()">Se déconnecter</button>
+      } @else {
+        <span>Carnet de vaccination électronique</span>
+        <span class="spacer"></span>
+        <button mat-button routerLink="/register">Créer un compte</button>
+        <button mat-button routerLink="/login">Se connecter</button>
+      }
+    </mat-toolbar>
+    <div class="sidenav-scroll-wrapper">
+      <div class="sidenav-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,111 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-title>Nouveau compte</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field
+          appearance="outline"
+          [class.has-error]="registerForm.get('email')?.invalid"
+        >
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+          @if (registerForm.get('email')?.invalid) {
+            <mat-error>Email invalide</mat-error>
+          }
+          @if (
+            registerForm.get('email')?.errors?.['required'] &&
+            registerForm.get('email')?.touched
+          ) {
+            <mat-error>Email est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          [class.has-error]="registerForm.get('firstName')?.invalid"
+        >
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" />
+
+          @if (
+            registerForm.get('firstName')?.errors?.['required'] &&
+            registerForm.get('firstName')?.touched
+          ) {
+            <mat-error>Prénom est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          [class.has-error]="registerForm.get('lastName')?.invalid"
+        >
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName" />
+
+          @if (
+            registerForm.get('lastName')?.errors?.['required'] &&
+            registerForm.get('lastName')?.touched
+          ) {
+            <mat-error>Nom est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          [class.has-error]="registerForm.get('password')?.invalid"
+        >
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-hint>
+            Le mot de passe doit contenir au moins 10 caractères, incluant des
+            chiffres, des majuscules, des minuscules et des caractères spéciaux.
+          </mat-hint>
+          @if (registerForm.get('password')?.hasError('minlength')) {
+            <mat-error
+              >Le mot de passe doit contenir au moins 10 caractères</mat-error
+            >
+          }
+          @if (
+            registerForm.get('password')?.errors?.['required'] &&
+            registerForm.get('password')?.touched
+          ) {
+            <mat-error>Le mot de passe est requis</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          [class.has-error]="registerForm.get('confirmPassword')?.invalid"
+        >
+          <mat-label>Confirmer le mot de passe</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" />
+
+          @if (
+            hasError('confirmPassword', 'required') &&
+            registerForm.get('confirmPassword')?.touched
+          ) {
+            <mat-error>La confirmation du mot de passe est requise</mat-error>
+          }
+          @if (
+            hasError('confirmPassword', 'passwordMismatch') &&
+            registerForm.get('confirmPassword')?.touched
+          ) {
+            <mat-error>Les mots de passe ne correspondent pas</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          S'inscrire
+        </button>
+      </form>
+      @if (apiErrorMessage) {
+        <mat-error>{{ apiErrorMessage }}</mat-error>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

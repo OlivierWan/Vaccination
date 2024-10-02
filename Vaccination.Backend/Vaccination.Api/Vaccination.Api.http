@@ -1,0 +1,94 @@
+@Vaccination.Api_HostAddress = https://localhost:7128
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0BjZGUuY29tIiwidXNlcmlkIjoiMTU3NzA0ZDItNzMyZS00ZWZiLWJhMGMtNDYxM2Q5NzM0MTc5Iiwiand0aWQiOiIxMjg2MzJiMC03YTRhLTQ4MmQtYjRmNi1jMTYzZWU5YjA4Y2EiLCJmaXJzdG5hbWUiOiJPbGl2aWVyIiwibGFzdG5hbWUiOiJBYmMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiUkVBRCIsIldSSVRFIiwiVVNFUiIsIkRFTEVURSJdLCJleHAiOjE3Mjc4MDIzMTcsImlzcyI6ImxvY2FsaG9zdCIsImF1ZCI6ImxvY2FsaG9zdCJ9.3g1S9ZZjEQhXRRbQr8paSHCCreNzhBjB9wjfAk4OmUQ
+
+
+
+### Login to get token
+POST {{Vaccination.Api_HostAddress}}/Auth/Login
+Content-Type: application/json
+
+{
+  "Email": "abc@cde.com",
+  "Password": "SecurePassword123!"
+}
+
+### Register an account
+POST {{Vaccination.Api_HostAddress}}/Auth/Register
+Content-Type: application/json
+
+{
+  "Email": "abc@cde.com",
+  "Password": "SecurePassword123!",
+  "FirstName": "New",
+  "LastName": "User"
+}
+
+###
+
+### Get Calendar
+GET {{Vaccination.Api_HostAddress}}/Calendar/GetAll
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get User Details
+GET {{Vaccination.Api_HostAddress}}/User/GetUser
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+
+
+### Update User Details
+PUT {{Vaccination.Api_HostAddress}}/User/Update
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "FirstName": "Olivier",
+  "LastName": "Abc",
+  "Email": "abc@cde.com",
+  "SocialSecurityNumber": "",
+  "DateOfBirth": null, 
+  "City": "",
+  "Nationality": "",
+  "Address": "",
+  "PostalCode": "",
+  "PhoneNumber": "+352 691 123 456"
+}
+
+###
+
+### Delete User Account
+DELETE {{Vaccination.Api_HostAddress}}/User/Delete
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Create Vaccination
+POST {{Vaccination.Api_HostAddress}}/Vaccination/Create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "VaccinationDate": "2024-09-29",
+  "Description": "3eme vaccin",
+  "VaccineCalendarId": "e668ed13-2831-4bdc-8b98-f283b5e86a70"
+}
+
+
+
+### Get All Vaccinations
+GET {{Vaccination.Api_HostAddress}}/Vaccination/GetAll?OrderBy=VaccineDescription&OrderDirection=asc&PageSize=5&PageNumber=1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+
+### Get Upcoming Reminders
+GET {{Vaccination.Api_HostAddress}}/Reminder/GetUpcomingVaccines
+Content-Type: application/json
+Authorization: Bearer {{token}}

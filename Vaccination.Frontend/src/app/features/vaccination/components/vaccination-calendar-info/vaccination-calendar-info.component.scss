@@ -1,0 +1,25 @@
+.calendar-info-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.calendar-details {
+  margin-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.detail-value {
+  color: #777;
+}

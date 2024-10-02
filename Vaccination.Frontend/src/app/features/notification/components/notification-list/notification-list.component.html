@@ -1,0 +1,37 @@
+<div class="list-container">
+  @if (notifications().length > 0) {
+    <mat-list>
+      <ng-container
+        *ngFor="let notification of notifications(); let last = last"
+      >
+        <mat-list-item
+          class="clickable-row"
+          (click)="onNotificationClick(notification.calendarVaccinationId)"
+        >
+          <mat-icon aria-hidden="false"  matListItemIcon>vaccines</mat-icon>
+          <span matListItemTitle>
+            {{
+              notification.monthAge === 0
+                ? 'Nouveau-né'
+                : notification.monthAge + ' mois'
+            }}
+          </span>
+
+          <span
+            matListItemLine
+            matTooltip="Type de vaccin: {{ notification.name }}"
+            >{{ notification.name }}</span
+          >
+          <span matListItemLine>{{ notification.message }}</span>
+        </mat-list-item>
+        @if (!last) {
+          <mat-divider></mat-divider>
+        }
+      </ng-container>
+    </mat-list>
+  } @else {
+    <ng-template>
+      <p>Aucune notification pour le moment.</p>
+    </ng-template>
+  }
+</div>
